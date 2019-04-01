@@ -288,7 +288,8 @@ def generator(file_name):
     while True:
         with open(file_name) as answers:
             for answer in answers:
-                batch_of_answers.append(answer.strip().decode('utf-8'))
+                # batch_of_answers.append(answer.strip().decode('utf-8'))
+                batch_of_answers.append(answer.strip())
                 if len(batch_of_answers) == CONFIG.batch_size:
                     random_shuffle(batch_of_answers)
                     batch_of_questions = []
@@ -373,9 +374,9 @@ def preprocesses_data_clean():
     """Pre-process the data - step 1 - cleanup"""
     with open(NEWS_FILE_NAME_CLEAN, "wb") as clean_data:
         for line in open(NEWS_FILE_NAME):
-            decoded_line = line.decode('utf-8')
+            decoded_line = line #.decode('utf-8')
             cleaned_line = clean_text(decoded_line)
-            encoded_line = cleaned_line.encode("utf-8")
+            encoded_line = cleaned_line #.encode("utf-8")
             clean_data.write(encoded_line + b"\n")
 
 def preprocesses_data_analyze_chars():
@@ -383,7 +384,7 @@ def preprocesses_data_analyze_chars():
     counter = Counter()
     LOGGER.info("Reading data:")
     for line in open(NEWS_FILE_NAME_CLEAN):
-        decoded_line = line.decode('utf-8')
+        decoded_line = line #.decode('utf-8')
         counter.update(decoded_line)
 #     data = open(NEWS_FILE_NAME_CLEAN).read().decode('utf-8')
 #     LOGGER.info("Read.\nCounting characters:")
@@ -408,7 +409,7 @@ def preprocesses_data_filter():
     LOGGER.info("Reading and filtering data:")
     with open(NEWS_FILE_NAME_FILTERED, "wb") as output_file:
         for line in open(NEWS_FILE_NAME_CLEAN):
-            decoded_line = line.decode('utf-8')
+            decoded_line = line #.decode('utf-8')
             if decoded_line and not bool(set(decoded_line) - most_popular_chars):
                 output_file.write(line)
     LOGGER.info("Done.")
@@ -416,7 +417,8 @@ def preprocesses_data_filter():
 def read_filtered_data():
     """Read the filtered data corpus"""
     LOGGER.info("Reading filtered data:")
-    lines = open(NEWS_FILE_NAME_FILTERED).read().decode('utf-8').split("\n")
+    # lines = open(NEWS_FILE_NAME_FILTERED).read().decode('utf-8').split("\n")
+    lines = open(NEWS_FILE_NAME_FILTERED).read().split("\n")
     LOGGER.info("Read filtered data - %s lines", len(lines))
     return lines
 
@@ -433,7 +435,7 @@ def preprocesses_split_lines():
     answers = set()
     with open(NEWS_FILE_NAME_SPLIT, "wb") as output_file:
         for _line in open(NEWS_FILE_NAME_FILTERED):
-            line = _line.decode('utf-8')
+            line = _line #.decode('utf-8')
             while len(line) > MIN_INPUT_LEN:
                 if len(line) <= CONFIG.max_input_len:
                     answer = line
@@ -460,7 +462,7 @@ def preprocesses_split_lines2():
     LOGGER.info("Reading filtered data:")
     answers = set()
     for encoded_line in open(NEWS_FILE_NAME_FILTERED):
-        line = encoded_line.decode('utf-8')
+        line = encoded_line #.decode('utf-8')
         if CONFIG.max_input_len >= len(line) > MIN_INPUT_LEN:
             answers.add(line)
     LOGGER.info("There are %s 'answers' (sub-sentences)", len(answers))
@@ -477,7 +479,7 @@ def preprocesses_split_lines3():
     LOGGER.info("Reading filtered data:")
     answers = set()
     for encoded_line in open(NEWS_FILE_NAME_FILTERED):
-        line = encoded_line.decode('utf-8')
+        line = encoded_line #.decode('utf-8')
         if line.count(" ") < 5:
             answers.add(line)
     LOGGER.info("There are %s 'answers' (sub-sentences)", len(answers))
@@ -510,7 +512,8 @@ def preprocesses_split_lines4():
 
 def preprocess_partition_data():
     """Set asside data for validation"""
-    answers = open(NEWS_FILE_NAME_SPLIT).read().decode('utf-8').split("\n")
+    # answers = open(NEWS_FILE_NAME_SPLIT).read().decode('utf-8').split("\n")
+    answers = open(NEWS_FILE_NAME_SPLIT).read().split("\n")
     print('shuffle', end=" ")
     random_shuffle(answers)
     print("Done")
@@ -533,7 +536,8 @@ def generate_question(answer):
 def generate_news_data():
     """Generate some news data"""
     print ("Generating Data")
-    answers = open(NEWS_FILE_NAME_SPLIT).read().decode('utf-8').split("\n")
+    # answers = open(NEWS_FILE_NAME_SPLIT).read().decode('utf-8').split("\n")
+    answers = open(NEWS_FILE_NAME_SPLIT).read().split("\n")
     questions = []
     print('shuffle', end=" ")
     random_shuffle(answers)
