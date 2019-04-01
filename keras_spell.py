@@ -576,8 +576,8 @@ def train_speller(from_file=None):
     itarative_train(model)
 
 if __name__ == '__main__':
-    print("(1)")
-    download_the_news_data()
+    #print("(1)")
+    #download_the_news_data()
     print("(2)")
     uncompress_data()
     print("(3)")
