@@ -572,14 +572,22 @@ def train_speller(from_file=None):
     itarative_train(model)
 
 if __name__ == '__main__':
+    print("(1)")
     download_the_news_data()
+    print("(2)")
     uncompress_data()
+    print("(3)")
     preprocesses_data_clean()
+    print("(4)")
     preprocesses_data_analyze_chars()
+    print("(5)")
     preprocesses_data_filter()
     # preprocesses_split_lines() --- Choose this step or:
+    print("(6)")
     preprocesses_split_lines2()
     # preprocesses_split_lines4()
+    print("(7)")
     preprocess_partition_data()
+    print("(8)")
     train_speller(os.path.join(DATA_FILES_FULL_PATH, "keras_spell_e15.h5"))
     # train_speller()
